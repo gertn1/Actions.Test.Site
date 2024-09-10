@@ -4,7 +4,7 @@ using Actions.Test.Site.Domain.Entities;
 
 namespace Actions.Test.Site.Application.Interfaces.Services
 {
-    public interface IUserService : IBaseService<UserEntity, UserCreationDto, UserEditDto, int>
+    public interface IUserService : IBaseService<UserEntity, UserCreateDto, UserEditDto, int>
     {
 
     }
