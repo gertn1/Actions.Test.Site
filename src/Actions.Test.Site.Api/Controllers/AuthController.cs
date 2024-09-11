@@ -27,15 +27,23 @@ namespace Actions.Test.Site.Web.Api.Controllers
         {
             var user = await _userRepository.GetUserByEmailAsync(loginDto.Email);
 
-            if (user == null || user.Password != loginDto.Password)
+            if (user == null)
+            {
+                return Unauthorized("Invalid email or password.");
+            }
+
+            
+            bool isPasswordValid = BCrypt.Net.BCrypt.Verify(loginDto.Password, user.Password);
+            if (!isPasswordValid)
             {
                 return Unauthorized("Invalid email or password.");
             }
 
             var token = GenerateJwtToken(user);
-
             return Ok(new { Token = token });
         }
+
+
 
         private string GenerateJwtToken(UserEntity user)
         {
@@ -48,7 +56,7 @@ namespace Actions.Test.Site.Web.Api.Controllers
                 new Claim(ClaimTypes.Name, user.Name),
             };
 
-            // Assinatura digital
+           
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 

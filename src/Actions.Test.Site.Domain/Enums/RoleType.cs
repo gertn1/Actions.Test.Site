@@ -3,7 +3,7 @@
     public enum RoleType
     {
         Admin = 1,
-        Operador = 2
+        Operator = 2
     }
 
 }

@@ -20,7 +20,7 @@ namespace Actions.Test.Site.Infrastructure.Migrations
                 oldType: "date");
         }
 
-        /// <inheritdoc />
+       
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AlterColumn<DateOnly>(
