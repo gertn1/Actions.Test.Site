@@ -1,6 +1,6 @@
 ﻿namespace Actions.Test.Site.Domain.Entities
 {
-    public class UserEntity : BaseEntity
+    public class UserEntity : BaseEntity 
     {
         public string Name { get; set; }
         public string Email { get; set; }
@@ -14,6 +14,7 @@
         public RoleEntity Role { get; set; }
 
 
+       
     }
 
 }

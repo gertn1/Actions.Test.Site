@@ -1,17 +1,17 @@
 ﻿
 using Actions.Test.Site.Application.DTOs.UserDto;
 using Actions.Test.Site.Application.Interfaces.Services;
-using Actions.Test.Site.Application.Dto.Responses.Generic;
+using Actions.Test.Site.Application.Response;
+using Actions.Test.Site.Domain.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Actions.Test.Site.Api.Controllers.Base;
 
 namespace Actions.Test.Site.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
-    public class UserController : BaseController
+    public class UserController : ControllerBase 
     {
         private readonly IUserService _userService;
 
@@ -20,114 +20,53 @@ namespace Actions.Test.Site.Api.Controllers
             _userService = userService;
         }
 
-        [HttpGet]
+        [HttpGet("ListarUsuarios")]
         [Authorize(Roles = "Admin,Operator")]
-        [ProducesResponseType(typeof(SuccessResponseDto), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(ErrorResponseDto), StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> GetUsers()
+        public async Task<ActionResult<ResponseModel<List<UserEntity>>>> GetUsers()
         {
-            try
-            {
-                var response = await _userService.ListAsync();
-                if (!response.Status)
-                    return BadRequestResponse(response.Mensagem);
-
-                return SuccessResponse(response.Dados);
-            }
-            catch (Exception ex)
-            {
-                return InternalServerErrorResponse("An error occurred while fetching users.", ex);
-            }
+            var response = await _userService.ListAsync();
+            return Ok(response);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("BuscarUsuarioPorId/{id}")]
         [Authorize(Roles = "Admin,Operator")]
-        [ProducesResponseType(typeof(SuccessResponseDto), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(ErrorResponseDto), StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> GetUser(int id)
+        public async Task<ActionResult<ResponseModel<UserEntity>>> GetUser(int id)
         {
-            try
-            {
-                var response = await _userService.GetByIdAsync(id);
-                if (!response.Status)
-                    return NotFoundResponse(response.Mensagem);
-
-                return SuccessResponse(response.Dados);
-            }
-            catch (Exception ex)
-            {
-                return InternalServerErrorResponse($"An error occurred while fetching the user with ID {id}.", ex);
-            }
+            var response = await _userService.GetByIdAsync(id);
+            return Ok(response);
         }
 
-        [HttpPost]
+        [HttpPost("CriarUsuario")]
         [Authorize(Roles = "Admin,Operator")]
-        [ProducesResponseType(typeof(SuccessResponseDto), StatusCodes.Status201Created)]
-        [ProducesResponseType(typeof(ErrorResponseDto), StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> CreateUser([FromBody] UserCreateDto userDto)
+        public async Task<ActionResult<ResponseModel<UserEntity>>> CreateUser([FromBody] UserCreateDto userDto)
         {
-            if (!ModelState.IsValid)
-                return BadRequestResponse("Invalid model state");
-
-            try
-            {
-                var response = await _userService.CreateAsync(userDto);
-                if (!response.Status)
-                    return BadRequestResponse(response.Mensagem);
-
-                return CustomSuccessResponse(StatusCodes.Status201Created, response.Dados);
-            }
-            catch (Exception ex)
-            {
-                return InternalServerErrorResponse("An error occurred while creating the user.", ex);
-            }
+            var response = await _userService.CreateAsync(userDto);
+            return Ok(response);
         }
 
-        [HttpPut("{id}")]
+        [HttpPut("EditarUsuario/{id}")]
         [Authorize(Roles = "Admin")]
-        [ProducesResponseType(typeof(SuccessResponseDto), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(ErrorResponseDto), StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(typeof(ErrorResponseDto), StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> UpdateUser(int id, [FromBody] UserEditDto userDto)
+        public async Task<ActionResult<ResponseModel<UserEntity>>> UpdateUser(int id, [FromBody] UserEditDto userDto)
         {
             if (id != userDto.Id)
-                return BadRequestResponse("User ID mismatch");
-
-            if (!ModelState.IsValid)
-                return BadRequestResponse("Invalid model state");
-
-            try
             {
-                var response = await _userService.UpdateAsync(userDto);
-                if (!response.Status)
-                    return NotFoundResponse(response.Mensagem);
+                return BadRequest(new ResponseModel<UserEntity>
+                {
+                    Status = false,
+                    Mensagem = "User ID mismatch"
+                });
+            }
 
-                return SuccessResponse(response.Dados);
-            }
-            catch (Exception ex)
-            {
-                return InternalServerErrorResponse($"An error occurred while updating the user with ID {id}.", ex);
-            }
+            var response = await _userService.UpdateAsync(userDto);
+            return Ok(response);
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("ExcluirUsuario/{id}")]
         [Authorize(Roles = "Admin")]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(typeof(ErrorResponseDto), StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> DeleteUser(int id)
+        public async Task<ActionResult<ResponseModel<UserEntity>>> DeleteUser(int id)
         {
-            try
-            {
-                var response = await _userService.DeleteAsync(id);
-                if (!response.Status)
-                    return NotFoundResponse(response.Mensagem);
-
-                return NoContent();
-            }
-            catch (Exception ex)
-            {   
-                return InternalServerErrorResponse($"An error occurred while deleting the user with ID {id}.", ex);
-            }
+            var response = await _userService.DeleteAsync(id);
+            return Ok(response);
         }
     }
 }

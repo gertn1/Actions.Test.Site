@@ -1,51 +1,30 @@
-﻿//namespace Actions.Test.Site.Application.Response
-//{
-//    public class ResponseModel<T>
-//    {
-//        public T? Dados { get; set; }
-//        public string Mensagem { get; set; } = string.Empty;
-//        public bool Status { get; set; } = true;
-
-//    }
-//}
-
-
+﻿
 namespace Actions.Test.Site.Application.Response
 {
     public class ResponseModel<T>
     {
-        public bool Status { get; set; }
-        public int StatusCode { get; set; }
-        public string Mensagem { get; set; }
-        public T Dados { get; set; }
-        public List<string>? Erros { get; set; }
+        public T? Dados { get; set; }
+        public string Mensagem { get; set; } = string.Empty;
+        public bool Status { get; set; } = true;
 
-        public ResponseModel()
-        {
-            Erros = new List<string>();
-        }
-
-        // Método auxiliar para criar uma resposta de sucesso
-        public static ResponseModel<T> Success(T data, string mensagem = "Request successful", int statusCode = 200)
+        public static ResponseModel<T> Success(T data, string message = "Operation successful")
         {
             return new ResponseModel<T>
             {
+                Dados = data,
                 Status = true,
-                StatusCode = statusCode,
-                Mensagem = mensagem,
-                Dados = data
+                Mensagem = message
             };
         }
 
-        // Método auxiliar para criar uma resposta de erro
-        public static ResponseModel<T> Error(string mensagem, int statusCode = 500, List<string>? erros = null)
+       
+        public static ResponseModel<T> Error(string message, T data = default)
         {
             return new ResponseModel<T>
             {
+                Dados = data,
                 Status = false,
-                StatusCode = statusCode,
-                Mensagem = mensagem,
-                Erros = erros ?? new List<string>()
+                Mensagem = message
             };
         }
     }

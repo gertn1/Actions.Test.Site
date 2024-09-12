@@ -1,6 +1,4 @@
 ﻿
-
-
 using Actions.Test.Site.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 

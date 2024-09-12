@@ -1,10 +1,7 @@
-﻿using Actions.Test.Site.Domain.Entities;
-
-namespace Actions.Test.Site.Application.DTOs.UserDto
+﻿namespace Actions.Test.Site.Application.DTOs.UserDto
 {
     public class UserCreateDto
     {
-
         public string Name { get; set; }
         public string Email { get; set; }
         public string Phone { get; set; }
@@ -13,7 +10,6 @@ namespace Actions.Test.Site.Application.DTOs.UserDto
         public string Address { get; set; }
         public int RoleId { get; set; }
         public DateTime? LastLogin { get; set; }
-      
 
         public UserCreateDto(string name, string email, string phone, DateTime birthDate, string password, string address, int roleId)
         {
@@ -21,7 +17,7 @@ namespace Actions.Test.Site.Application.DTOs.UserDto
             Email = email;
             Phone = phone;
             BirthDate = birthDate;
-            Password = password;
+            Password = BCrypt.Net.BCrypt.HashPassword(password); 
             Address = address;
             RoleId = roleId;
         }

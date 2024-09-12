@@ -2,7 +2,6 @@
 {
     using global::Actions.Test.Site.Domain.Entities;
     using global::Actions.Test.Site.Domain.Interfaces.Repositories;
-   
     using global::Actions.Test.Site.Infrastructure.Repositories.RepositoryBase;
     using Microsoft.EntityFrameworkCore;
 
