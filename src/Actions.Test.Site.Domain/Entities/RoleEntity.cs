@@ -2,9 +2,11 @@
 
 namespace Actions.Test.Site.Domain.Entities
 {
-    public class RoleEntity : BaseEntity
+    public class RoleEntity
     {
-        public RoleType RoleName { get; set; }
+
+        public int Id { get; set; }
+        public string RoleName { get; set; }
 
         public ICollection<UserEntity> Users { get; set; }
     }

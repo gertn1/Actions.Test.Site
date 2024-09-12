@@ -16,7 +16,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 
-// Configuração do FluentValidation
+// Configuraï¿½ï¿½o do FluentValidation
 builder.Services.AddControllers()
     .AddFluentValidation(fv =>
     {
@@ -24,12 +24,12 @@ builder.Services.AddControllers()
         fv.RegisterValidatorsFromAssemblyContaining<UserEditValidator>();
     });
 
-// Configuração do Swagger para suportar JWT
+// Configuraï¿½ï¿½o do Swagger para suportar JWT
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "API JWT", Version = "v1" });
 
-    // Configuração para o campo de token JWT
+    // Configuraï¿½ï¿½o para o campo de token JWT
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
         Name = "Authorization",
@@ -40,7 +40,7 @@ builder.Services.AddSwaggerGen(c =>
         Description = "Insira o token JWT desta forma: Bearer {seu token}"
     });
 
-    // Configuração global de segurança
+    // Configuraï¿½ï¿½o global de seguranï¿½a
     c.AddSecurityRequirement(new OpenApiSecurityRequirement
     {
         {
@@ -57,15 +57,15 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
-// Configuração do DbContext com a string de conexão do appsettings.json
+// Configuraï¿½ï¿½o do DbContext com a string de conexï¿½o do appsettings.json
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// Configuração do repositório
+// Configuraï¿½ï¿½o do repositï¿½rio
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IUserService, UserService>();
 
-// Configuração do JWT
+// ConfiguraÃ§ao do JWT
 var jwtSettings = builder.Configuration.GetSection("Jwt");
 var key = Encoding.UTF8.GetBytes(jwtSettings["Key"]);
 
@@ -88,7 +88,7 @@ builder.Services.AddAuthentication(options =>
     };
 });
 
-// Configuração para JSON
+// Configuraï¿½ï¿½o para JSON
 builder.Services.AddControllers()
     .AddJsonOptions(options =>
     {
@@ -98,7 +98,7 @@ builder.Services.AddControllers()
 
 var app = builder.Build();
 
-// Configuração do pipeline HTTP
+// Configuraï¿½ï¿½o do pipeline HTTP
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -110,7 +110,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-// Autenticação e autorização
+// Autenticaï¿½ï¿½o e autorizaï¿½ï¿½o
 app.UseAuthentication();
 app.UseAuthorization();
 

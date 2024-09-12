@@ -14,15 +14,14 @@ public class AppDbContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
 
-        modelBuilder.Entity<RoleEntity>()
-           .Property(r => r.Id)
-           .ValueGeneratedNever();
-
         modelBuilder.Entity<UserEntity>()
            .HasOne(u => u.Role)
         .WithMany(r => r.Users)
         .HasForeignKey(u => u.RoleId)
         .OnDelete(DeleteBehavior.Cascade);
+
+        modelBuilder.Entity<RoleEntity>()
+          .Property(r => r.Id);
 
         base.OnModelCreating(modelBuilder);
     }
