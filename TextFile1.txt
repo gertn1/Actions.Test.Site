@@ -1,0 +1,28 @@
+# Actions.Test.Site API
+
+## Descrição
+
+Actions.Test.Site é uma API desenvolvida em C# para gerenciamento de usuários, autenticação com JWT e controle baseado em papéis. Ela permite criar, editar, listar e excluir usuários, além de aplicar restrições de acesso a rotas de acordo com os papéis atribuídos.
+
+## Tecnologias Utilizadas
+- .NET 8
+- Entity Framework Core
+- FluentValidation
+- JWT Authentication
+- BCrypt.Net para criptografia de senhas
+
+## Pré-requisitos
+
+- [.NET 6 SDK](https://dotnet.microsoft.com/download/dotnet/6.0)
+- [SQL Server](https://www.microsoft.com/en-us/sql-server/sql-server-downloads) ou outro banco de dados compatível.
+- Git
+
+## Instalação
+
+1. **Clone o repositório**:
+
+   ```bash
+   git clone https://github.com/gertn1/Actions.Test.Site.git
+   cd Actions.Test.Site
+
+   ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/9a53cfb7-5071-49f9-84e2-26cf88839093/54ed41ed-1b08-4672-9f24-6400912befa2/image.png)
