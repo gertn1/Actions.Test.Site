@@ -1,4 +1,5 @@
-﻿using System.IdentityModel.Tokens.Jwt;
+﻿
+using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using Actions.Test.Site.Application.DTOs.LoginDto;
@@ -32,7 +33,6 @@ namespace Actions.Test.Site.Web.Api.Controllers
                 return Unauthorized("Invalid email or password.");
             }
 
-            
             bool isPasswordValid = BCrypt.Net.BCrypt.Verify(loginDto.Password, user.Password);
             if (!isPasswordValid)
             {
@@ -43,8 +43,6 @@ namespace Actions.Test.Site.Web.Api.Controllers
             return Ok(new { Token = token });
         }
 
-
-
         private string GenerateJwtToken(UserEntity user)
         {
             var claims = new[]
@@ -52,11 +50,10 @@ namespace Actions.Test.Site.Web.Api.Controllers
                 new Claim(JwtRegisteredClaimNames.Sub, user.Email),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                 new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-                new Claim(ClaimTypes.Role, user.Role.RoleName.ToString()), 
+               new Claim(ClaimTypes.Role, user.Role.ToString()),
                 new Claim(ClaimTypes.Name, user.Name),
             };
 
-           
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 

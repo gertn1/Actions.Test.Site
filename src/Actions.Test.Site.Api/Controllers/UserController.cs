@@ -22,6 +22,7 @@ namespace Actions.Test.Site.Api.Controllers
 
         [HttpGet("ListarUsuarios")]
         [Authorize(Roles = "Admin,Operator")]
+       
         public async Task<ActionResult<ResponseModel<List<UserEntity>>>> GetUsers()
         {
             var response = await _userService.ListAsync();

@@ -14,7 +14,8 @@ namespace Actions.Test.Site.Application.Validators
             RuleFor(x => x.BirthDate).NotEmpty().WithMessage("A data de nascimento é obrigatória.");
             RuleFor(x => x.Password).NotEmpty().WithMessage("A senha é obrigatória.");
             RuleFor(x => x.Address).NotEmpty().WithMessage("O endereço é obrigatório.");
-            RuleFor(x => x.RoleId).GreaterThan(0).WithMessage("O ID do cargo deve ser maior que zero.");
+            RuleFor(x => x.RoleType)
+                .IsInEnum().WithMessage("O tipo de cargo é inválido.");
         }
     }
 }

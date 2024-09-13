@@ -1,5 +1,6 @@
 ﻿
 using Actions.Test.Site.Application.DTOs.Base;
+using Actions.Test.Site.Domain.Enums;
 
 namespace Actions.Test.Site.Application.DTOs.UserDto
 {
@@ -11,10 +12,10 @@ namespace Actions.Test.Site.Application.DTOs.UserDto
         public DateTime BirthDate { get; set; }
         public string Password { get; set; }
         public string Address { get; set; }
-        public int RoleId { get; set; }
+        public RoleType RoleType { get; set; }
         public DateTime? LastLogin { get; set; }
 
-        public UserEditDto(string name, string email, string phone, DateTime birthDate, string password, string address, int roleId)
+        public UserEditDto(string name, string email, string phone, DateTime birthDate, string password, string address, RoleType roleType)
         {
             Name = name;
             Email = email;
@@ -22,7 +23,7 @@ namespace Actions.Test.Site.Application.DTOs.UserDto
             BirthDate = birthDate;
             Password = !string.IsNullOrWhiteSpace(password) ? BCrypt.Net.BCrypt.HashPassword(password) : password;
             Address = address;
-            RoleId = roleId;
+            RoleType = roleType;
         }
     }
 }

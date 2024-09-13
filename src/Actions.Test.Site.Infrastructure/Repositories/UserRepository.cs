@@ -14,14 +14,13 @@
             }
             public async Task<UserEntity?> GetByEmailAsync(string email)
             {
-                return await _context.Users.Include(u => u.Role)
-                                           .FirstOrDefaultAsync(u => u.Email == email);
+                return await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
             }
 
             public async Task<UserEntity> GetUserByEmailAsync(string email)
             {
-                var user = await _context.Users.Include(u => u.Role)
-                                               .FirstOrDefaultAsync(u => u.Email == email);
+                var user = await _context.Users
+                                     .FirstOrDefaultAsync(u => u.Email == email);
                 if (user == null)
                 {
                     throw new Exception("User not found");

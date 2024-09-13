@@ -18,8 +18,8 @@ namespace YourNamespace.Application.Map
                 BirthDate = dto.BirthDate,
                 Password = dto.Password,
                 Address = dto.Address,
-                RoleId = dto.RoleId
-            };
+                Role = dto.RoleType
+            };  
         }
         public static void MapUpdateEntity(this UserEditDto dto, UserEntity entity)
         {
@@ -29,7 +29,7 @@ namespace YourNamespace.Application.Map
             entity.BirthDate = dto.BirthDate;
             entity.Password = dto.Password;
             entity.Address = dto.Address;
-            entity.RoleId = dto.RoleId;
+            entity.Role = dto.RoleType;
         }
     }
 }
