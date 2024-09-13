@@ -1,4 +1,5 @@
 ﻿
+using System.Net;
 using Actions.Test.Site.Application.DTOs.Base;
 using Actions.Test.Site.Domain.Enums;
 
@@ -21,7 +22,7 @@ namespace Actions.Test.Site.Application.DTOs.UserDto
             Email = email;
             Phone = phone;
             BirthDate = birthDate;
-            Password = !string.IsNullOrWhiteSpace(password) ? BCrypt.Net.BCrypt.HashPassword(password) : password;
+            Password = BCrypt.Net.BCrypt.HashPassword(password);
             Address = address;
             RoleType = roleType;
         }

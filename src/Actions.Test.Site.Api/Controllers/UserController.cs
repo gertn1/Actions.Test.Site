@@ -20,7 +20,7 @@ namespace Actions.Test.Site.Api.Controllers
             _userService = userService;
         }
 
-        [HttpGet("ListarUsuarios")]
+        [HttpGet("list-users")]
         [Authorize(Roles = "Admin,Operator")]
        
         public async Task<ActionResult<ResponseModel<List<UserEntity>>>> GetUsers()
@@ -29,7 +29,7 @@ namespace Actions.Test.Site.Api.Controllers
             return Ok(response);
         }
 
-        [HttpGet("BuscarUsuarioPorId/{id}")]
+        [HttpGet("get-id/{id}")]
         [Authorize(Roles = "Admin,Operator")]
         public async Task<ActionResult<ResponseModel<UserEntity>>> GetUser(int id)
         {
@@ -37,7 +37,7 @@ namespace Actions.Test.Site.Api.Controllers
             return Ok(response);
         }
 
-        [HttpPost("CriarUsuario")]
+        [HttpPost("create-user")]
         [Authorize(Roles = "Admin,Operator")]
         public async Task<ActionResult<ResponseModel<UserEntity>>> CreateUser([FromBody] UserCreateDto userDto)
         {
@@ -45,7 +45,7 @@ namespace Actions.Test.Site.Api.Controllers
             return Ok(response);
         }
 
-        [HttpPut("EditarUsuario/{id}")]
+        [HttpPut("edit-user/{id}")]
         [Authorize(Roles = "Admin")]
         public async Task<ActionResult<ResponseModel<UserEntity>>> UpdateUser(int id, [FromBody] UserEditDto userDto)
         {
@@ -62,7 +62,7 @@ namespace Actions.Test.Site.Api.Controllers
             return Ok(response);
         }
 
-        [HttpDelete("ExcluirUsuario/{id}")]
+        [HttpDelete("delete-user/{id}")]
         [Authorize(Roles = "Admin")]
         public async Task<ActionResult<ResponseModel<UserEntity>>> DeleteUser(int id)
         {
